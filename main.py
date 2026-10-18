@@ -10,6 +10,14 @@ app = FastAPI()
 ALLOWED_ORIGIN = "https://dash-zfc9ax.example.com"
 EMAIL = "24f3004934@ds.study.iitm.ac.in"
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[ALLOWED_ORIGIN],
+    allow_credentials=False,
+    allow_methods=["GET", "OPTIONS"],
+    allow_headers=["*"],
+)
+
 
 @app.middleware("http")
 async def add_request_headers(request: Request, call_next):
@@ -25,13 +33,6 @@ async def add_request_headers(request: Request, call_next):
     return response
 
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[ALLOWED_ORIGIN],
-    allow_credentials=False,
-    allow_methods=["GET", "OPTIONS"],
-    allow_headers=["*"],
-)
 
 
 @app.get("/")
